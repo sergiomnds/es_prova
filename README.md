@@ -1,4 +1,4 @@
-## Getting Started
+## Estrutura de Dados - Prova
 
 Repositório para criação do código para a avaliação final em Estrutura de Dados
 
