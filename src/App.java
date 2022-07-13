@@ -20,6 +20,7 @@ public class App {
 
                     System.out.println("Digite a opção desejada: ");
                     opcao = in.nextInt();
+                    in.nextLine();
                     executado = true;
                 } catch (Exception e) {
                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar novamente
@@ -49,8 +50,10 @@ public class App {
                             do {
                                 try {
                                     System.out.println("Escreva o nome do Destinatário: ");
-                                    destinatario = in.next();
+                                    destinatario = in.nextLine();
+                                    
                                     valido = true;
+                                   
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar
                                                                 // novamente
@@ -63,7 +66,7 @@ public class App {
                             do {
                                 try {
                                     System.out.println("Escreva o nome do Remetente: ");
-                                    remetente = in.next();
+                                    remetente = in.nextLine();
                                     valido = true;
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar
@@ -77,7 +80,7 @@ public class App {
                             do {
                                 try {
                                     System.out.println("Escreva sua Mensagem: ");
-                                    mensagem = in.next();
+                                    mensagem = in.nextLine();
                                     valido = true;
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar
@@ -91,7 +94,8 @@ public class App {
                                 try {
                                     System.out.println("Específique o endereço: ");
                                     System.out.println("Escreva o a Rua de destino: ");
-                                    rua = in.next();
+                                    rua = in.nextLine();
+                                    
                                     valido = true;
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar
@@ -105,6 +109,7 @@ public class App {
                                 try {
                                     System.out.println("Escreva o número da casa/apto: ");
                                     numero = in.nextInt();
+                                    in.nextLine();
                                     valido = true;
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar
@@ -117,7 +122,8 @@ public class App {
                             do {
                                 try {
                                     System.out.println("Escreva o Bairro de destino: ");
-                                    bairro = in.next();
+                                    bairro = in.nextLine();
+                                    
                                     valido = true;
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar
@@ -130,7 +136,7 @@ public class App {
                             do {
                                 try {
                                     System.out.println("Escreva a Cidade de destino: ");
-                                    cidade = in.next();
+                                    cidade = in.nextLine();
                                     valido = true;
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar
