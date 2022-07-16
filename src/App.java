@@ -1,8 +1,11 @@
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Map.Entry;
 
 public class App {
     public static void main(String[] args) throws Exception {
         Scanner in = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
         Mapa mapa = new Mapa();
         boolean sair = false;
         System.out.println("Bem vindo a Gerência de Telegramas");
@@ -51,9 +54,9 @@ public class App {
                                 try {
                                     System.out.println("Escreva o nome do Destinatário: ");
                                     destinatario = in.nextLine();
-                                    
+
                                     valido = true;
-                                   
+
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar
                                                                 // novamente
@@ -95,7 +98,7 @@ public class App {
                                     System.out.println("Específique o endereço: ");
                                     System.out.println("Escreva o a Rua de destino: ");
                                     rua = in.nextLine();
-                                    
+
                                     valido = true;
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar
@@ -123,7 +126,7 @@ public class App {
                                 try {
                                     System.out.println("Escreva o Bairro de destino: ");
                                     bairro = in.nextLine();
-                                    
+
                                     valido = true;
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar
@@ -220,12 +223,31 @@ public class App {
                                         }
                                     } while (!valido);
                                     break;
+
+                                case 'B':
+                                    try {
+                                        System.out.println("Digite o texto que deseja procurar: ");
+                                        String texto = scan.nextLine();
+                                        if (mapa.encontrarOcorrencia(texto) != null) {
+                                            Map<UF, Integer> ocorrencia = mapa.encontrarOcorrencia(texto);
+                                            System.out.println("Quantidade de Telegramas encontrados com a palavra no Estado: \n");
+                                            for (Entry<UF, Integer> pair : ocorrencia.entrySet()){
+                                                System.out.println(pair.getKey().getDescricao()+": " + pair.getValue());
+                                                   
+                                                  }
+                                           System.out.println("\n");
+                                        } else {
+                                            System.out.println("Telegrama não encontrado!");
+                                            System.out.println("Digite uma palavra completa para a verificação");
+                                        }
+
+                                    } catch (Exception e) {
+                                        scan = new Scanner(System.in);
+                                        System.out.println("Error: " + e.getMessage());
+                                        continue;
+                                    }
+                                    break;
                                 /*
-                                 * case 'B':
-                                 * System.out.println("Digite o texto que deseja procurar: ");
-                                 * String texto = in.nextLine();
-                                 * System.out.println("Ocorrências: " + mapa.encontrarOcorrencia(texto));
-                                 * break;
                                  * case 'C':
                                  * System.out.println("Digite a sigla do Estado: ");
                                  * String sigla = in.nextLine();

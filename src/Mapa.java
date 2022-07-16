@@ -1,7 +1,10 @@
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Mapa {
-    private HashMap<UF, Lista> mapa = new HashMap<UF, Lista>();
+    private Map<UF, Lista> mapa = new HashMap<UF, Lista>();
 
     Mapa() {
         for (UF uf : UF.values()) {
@@ -19,6 +22,18 @@ public class Mapa {
         return null;
     }
 
+    public Map<UF, Integer> encontrarOcorrencia(String texto){
+        Map<UF, Integer> mapa1 = new HashMap<UF, Integer>();
+        for (Entry<UF, Lista> pair : mapa.entrySet()){
+          List<Telegrama> telegrama = pair.getValue().encontrarOcorrencia(texto);
+            if(telegrama != null && telegrama.size() != 0){
+                mapa1.put(pair.getKey(), telegrama.size());
+             
+            }
+        }
+        return mapa1;
+    }
+
     public boolean adicionar(UF uf, Telegrama telegrama) throws IllegalArgumentException {
         if (uf == null) {
             throw new IllegalArgumentException("UF não pode ser nulo");
@@ -34,6 +49,7 @@ public class Mapa {
         }
         return false;
     }
+
 
     public boolean hasUF(UF uf) {
         return mapa.containsKey(uf);
