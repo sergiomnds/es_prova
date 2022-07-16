@@ -54,4 +54,9 @@ public class Mapa {
     public boolean hasUF(UF uf) {
         return mapa.containsKey(uf);
     }
+    
+    public int quantidadeTelegramas(UF uf){
+        return mapa.get(uf).listaTamanho();
+    }
+
 }

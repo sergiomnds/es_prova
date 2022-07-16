@@ -47,8 +47,13 @@ public class Lista {
     public int getContador() {
         return contador;
     }
-
+    
     public void setContador(int contador) {
         this.contador = contador;
     }
+    
+    public int listaTamanho(){
+        return lista.size();
+    }
+
 }
