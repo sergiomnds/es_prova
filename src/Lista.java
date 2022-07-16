@@ -1,8 +1,10 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Lista {
     private ArrayList<Telegrama> lista = new ArrayList<Telegrama>();
     private int contador = 1;
+    static int confirmacao = 0;
 
     public boolean adicionar(Telegrama telegrama) {
         telegrama.gerarIdentificador(contador);
@@ -29,6 +31,19 @@ public class Lista {
         return null;
     }
 
+    public List<Telegrama> encontrarOcorrencia(String texto) {
+        List<Telegrama> Ocorrencias = new ArrayList<>();
+        for (Telegrama telegrama : lista) {
+            String[] mensagem = telegrama.getMensagem().split(" ");
+            for (int i = 0; i < mensagem.length; i++) {
+                if (mensagem[i].equals(texto)) {
+                    Ocorrencias.add(telegrama);
+                }
+            }
+        }
+        return Ocorrencias;
+    }
+
     public int getContador() {
         return contador;
     }
@@ -37,7 +52,7 @@ public class Lista {
         this.contador = contador;
     }
 
-    public int quantidadeTelegramas() {
+    public int listaTamanho() {
         return lista.size();
     }
 }

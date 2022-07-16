@@ -1,7 +1,10 @@
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Mapa {
-    private HashMap<UF, Lista> mapa = new HashMap<UF, Lista>();
+    private Map<UF, Lista> mapa = new HashMap<UF, Lista>();
 
     Mapa() {
         for (UF uf : UF.values()) {
@@ -17,6 +20,18 @@ public class Mapa {
             }
         }
         return null;
+    }
+
+    public Map<UF, Integer> encontrarOcorrencia(String texto) {
+        Map<UF, Integer> mapa1 = new HashMap<UF, Integer>();
+        for (Entry<UF, Lista> pair : mapa.entrySet()) {
+            List<Telegrama> telegrama = pair.getValue().encontrarOcorrencia(texto);
+            if (telegrama != null && telegrama.size() != 0) {
+                mapa1.put(pair.getKey(), telegrama.size());
+
+            }
+        }
+        return mapa1;
     }
 
     public boolean adicionar(UF uf, Telegrama telegrama) throws IllegalArgumentException {
@@ -43,8 +58,8 @@ public class Mapa {
         int maior = 0;
         UF uf = null;
         for (UF uf1 : mapa.keySet()) {
-            if (mapa.get(uf1).quantidadeTelegramas() > maior) {
-                maior = mapa.get(uf1).quantidadeTelegramas();
+            if (mapa.get(uf1).listaTamanho() > maior) {
+                maior = mapa.get(uf1).listaTamanho();
                 uf = uf1;
             }
         }
@@ -55,23 +70,23 @@ public class Mapa {
         int menor = Integer.MAX_VALUE;
         UF uf = null;
         for (UF uf1 : mapa.keySet()) {
-            if (mapa.get(uf1).quantidadeTelegramas() < menor) {
-                menor = mapa.get(uf1).quantidadeTelegramas();
+            if (mapa.get(uf1).listaTamanho() < menor) {
+                menor = mapa.get(uf1).listaTamanho();
                 uf = uf1;
             }
         }
         return uf.getDescricao();
     }
 
-    public int quantidadeTelegramas(UF uf) {
-        return mapa.get(uf).quantidadeTelegramas();
-    }
-
     public int quantidadeTelegramasNoMapa() {
         int contador = 0;
         for (Lista lista : mapa.values()) {
-            contador += lista.quantidadeTelegramas();
+            contador += lista.listaTamanho();
         }
         return contador;
+    }
+
+    public int quantidadeTelegramas(UF uf) {
+        return mapa.get(uf).listaTamanho();
     }
 }

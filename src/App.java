@@ -1,4 +1,6 @@
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Map.Entry;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -93,7 +95,7 @@ public class App {
                             do {
                                 try {
                                     System.out.println("Específique o endereço: ");
-                                    System.out.println("Escreva o a Rua de destino: ");
+                                    System.out.println("Escreva a Rua de destino: ");
                                     rua = in.nextLine();
 
                                     valido = true;
@@ -177,7 +179,7 @@ public class App {
                                     System.out.println("Digite o identificador do telegrama que deseja remover: ");
                                     int identificador = in.nextInt();
                                     if (mapa.remover(identificador)) {
-                                        System.out.println("Contêiner desempilhado com sucesso!");
+                                        System.out.println("Telegrama removido com sucesso!");
                                         valido = true;
                                     }
                                 } catch (Exception e) {
@@ -220,19 +222,32 @@ public class App {
                                         }
                                     } while (!valido);
                                     break;
-                                /*
-                                 * case 'B':
-                                 * System.out.println("Digite o texto que deseja procurar: ");
-                                 * String texto = in.nextLine();
-                                 * System.out.println("Ocorrências: " + mapa.encontrarOcorrencia(texto));
-                                 * break;
-                                 * case 'C':
-                                 * System.out.println("Digite a sigla do Estado: ");
-                                 * String sigla = in.nextLine();
-                                 * System.out.println("Quantidade de Telegramas: " +
-                                 * mapa.quantidadeTelegramas(sigla));
-                                 * break;
-                                 */
+
+                                case 'B':
+                                    try {
+                                        System.out.println("Digite o texto que deseja procurar: ");
+                                        String texto = in.nextLine();
+                                        if (mapa.encontrarOcorrencia(texto) != null) {
+                                            Map<UF, Integer> ocorrencia = mapa.encontrarOcorrencia(texto);
+                                            System.out.println(
+                                                    "Quantidade de Telegramas encontrados com a palavra no Estado: \n");
+                                            for (Entry<UF, Integer> pair : ocorrencia.entrySet()) {
+                                                System.out
+                                                        .println(pair.getKey().getDescricao() + ": " + pair.getValue());
+
+                                            }
+                                            System.out.println("\n");
+                                        } else {
+                                            System.out.println("Telegrama não encontrado!");
+                                            System.out.println("Digite uma palavra completa para a verificação");
+                                        }
+
+                                    } catch (Exception e) {
+                                        in = new Scanner(System.in);
+                                        System.out.println("Error: " + e.getMessage());
+                                        continue;
+                                    }
+                                    break;
                                 case 'D':
                                     int totalTelegramas = mapa.quantidadeTelegramasNoMapa();
                                     valido = false;
@@ -276,10 +291,11 @@ public class App {
                                         }
                                     } while (!valido);
                                     break;
+
+                                case 4:
+                                    sair = true;
+                                    break;
                             }
-                            break;
-                        case 4:
-                            sair = true;
                     }
                     executado = true;
                 } catch (Exception e) {
