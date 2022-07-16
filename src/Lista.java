@@ -36,4 +36,8 @@ public class Lista {
     public void setContador(int contador) {
         this.contador = contador;
     }
+
+    public int quantidadeTelegramas() {
+        return lista.size();
+    }
 }

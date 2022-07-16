@@ -38,4 +38,40 @@ public class Mapa {
     public boolean hasUF(UF uf) {
         return mapa.containsKey(uf);
     }
+
+    public String getMaiorLista() {
+        int maior = 0;
+        UF uf = null;
+        for (UF uf1 : mapa.keySet()) {
+            if (mapa.get(uf1).quantidadeTelegramas() > maior) {
+                maior = mapa.get(uf1).quantidadeTelegramas();
+                uf = uf1;
+            }
+        }
+        return uf.getDescricao();
+    }
+
+    public String getMenorLista() {
+        int menor = Integer.MAX_VALUE;
+        UF uf = null;
+        for (UF uf1 : mapa.keySet()) {
+            if (mapa.get(uf1).quantidadeTelegramas() < menor) {
+                menor = mapa.get(uf1).quantidadeTelegramas();
+                uf = uf1;
+            }
+        }
+        return uf.getDescricao();
+    }
+
+    public int quantidadeTelegramas(UF uf) {
+        return mapa.get(uf).quantidadeTelegramas();
+    }
+
+    public int quantidadeTelegramasNoMapa() {
+        int contador = 0;
+        for (Lista lista : mapa.values()) {
+            contador += lista.quantidadeTelegramas();
+        }
+        return contador;
+    }
 }

@@ -51,9 +51,9 @@ public class App {
                                 try {
                                     System.out.println("Escreva o nome do Destinatário: ");
                                     destinatario = in.nextLine();
-                                    
+
                                     valido = true;
-                                   
+
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar
                                                                 // novamente
@@ -95,7 +95,7 @@ public class App {
                                     System.out.println("Específique o endereço: ");
                                     System.out.println("Escreva o a Rua de destino: ");
                                     rua = in.nextLine();
-                                    
+
                                     valido = true;
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar
@@ -123,7 +123,7 @@ public class App {
                                 try {
                                     System.out.println("Escreva o Bairro de destino: ");
                                     bairro = in.nextLine();
-                                    
+
                                     valido = true;
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);// reseta o scanner para que o usuario possa tentar
@@ -232,17 +232,50 @@ public class App {
                                  * System.out.println("Quantidade de Telegramas: " +
                                  * mapa.quantidadeTelegramas(sigla));
                                  * break;
-                                 * case 'D':
-                                 * System.out.println("Digite a sigla do Estado: ");
-                                 * String sigla2 = in.nextLine();
-                                 * System.out
-                                 * .println("Percentual de Telegramas: " + mapa.percentualTelegramas(sigla2));
-                                 * break;
-                                 * case 'E':
-                                 * System.out.println(
-                                 * "Quantidade de Telegramas: " + mapa.maiorMenorQuantidadeTelegramas());
-                                 * break;
                                  */
+                                case 'D':
+                                    int totalTelegramas = mapa.quantidadeTelegramasNoMapa();
+                                    valido = false;
+                                    do {
+                                        try {
+                                            for (UF ufPorcentagem : UF.values()) {
+                                                double porcentagem = (double) mapa.quantidadeTelegramas(ufPorcentagem)
+                                                        * 100
+                                                        / totalTelegramas;
+                                                if (mapa.quantidadeTelegramas(ufPorcentagem) > 0) {
+                                                    System.out.println(ufPorcentagem.getDescricao() + ": "
+                                                            + mapa.quantidadeTelegramas(ufPorcentagem)
+                                                            + " ("
+                                                            + (porcentagem)
+                                                            + "%)");
+                                                }
+                                            }
+                                            valido = true;
+                                        } catch (Exception e) {
+                                            in = new Scanner(System.in);
+                                            System.err.println("Erro: " + e.getMessage());
+                                            continue;
+                                        }
+                                    } while (!valido);
+                                    break;
+                                case 'E':
+                                    valido = false;
+                                    do {
+                                        try {
+                                            System.out
+                                                    .println("UF com maior quantidade de Telegramas: "
+                                                            + mapa.getMaiorLista());
+                                            System.out
+                                                    .println("UF com maior quantidade de Telegramas: "
+                                                            + mapa.getMenorLista());
+                                            valido = true;
+                                        } catch (Exception e) {
+                                            in = new Scanner(System.in);
+                                            System.err.println("Erro: " + e.getMessage());
+                                            continue;
+                                        }
+                                    } while (!valido);
+                                    break;
                             }
                             break;
                         case 4:
