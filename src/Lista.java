@@ -3,7 +3,6 @@ import java.util.List;
 
 public class Lista {
     private ArrayList<Telegrama> lista = new ArrayList<Telegrama>();
-    private int contador = 1;
     static int confirmacao = 0;
 
     public int adicionar(Telegrama telegrama, int id) {
@@ -37,8 +36,6 @@ public class Lista {
     public List<Telegrama> encontrarOcorrencia(String texto) {
         List<Telegrama> Ocorrencias = new ArrayList<>();
         for (Telegrama telegrama : lista) {
-            String[] mensagem = telegrama.getMensagem().split(" ");
-
             if (telegrama.getMensagem().toLowerCase().contains(texto)) { // verifica se a mensagem contem um determinado texto
                 Ocorrencias.add(telegrama);
 
