@@ -160,8 +160,9 @@ public class App {
                                     endereco = rua + ", " + numero + ", " + bairro + ", " + cidade + ", " + uf;
 
                                     Telegrama telegrama = new Telegrama(destinatario, remetente, mensagem, endereco);
-                                    if (mapa.adicionar(uf, telegrama)) {
-                                        System.out.println("Telegrama cadastrado com sucesso!");
+                                    int id_telegrama = mapa.adicionar(uf, telegrama);
+                                    if (id_telegrama !=-1) {
+                                        System.out.println("Telegrama cadastrado com sucesso! ID: " + id_telegrama);
                                         valido = true;
                                     }
                                 } catch (Exception e) {
@@ -180,8 +181,11 @@ public class App {
                                     int identificador = in.nextInt();
                                     if (mapa.remover(identificador)) {
                                         System.out.println("Telegrama removido com sucesso!");
-                                        valido = true;
+                                        
+                                    }else{
+                                        System.out.println("Telegrama não encontrado!");
                                     }
+                                    valido = true;
                                 } catch (Exception e) {
                                     in = new Scanner(System.in);
                                     System.out.println("Identificador inválido, tente novamente");
@@ -212,8 +216,15 @@ public class App {
                                             System.out.println(
                                                     "Digite o identificador do telegrama que deseja consultar: ");
                                             int identificador = in.nextInt();
-
-                                            System.out.println(mapa.consultarTelegrama(identificador));
+                                            Telegrama telegrama = mapa.consultarTelegrama(identificador);
+                                            if(telegrama != null) {
+                                                System.out.println(telegrama.toString());
+                                                valido = true;
+                                            }else {
+                                                System.out.println("Telegrama não encontrado!");
+                                                valido = true;
+                                            }
+                                            
                                             valido = true;
                                         } catch (Exception e) {
                                             in = new Scanner(System.in);
@@ -231,7 +242,7 @@ public class App {
                                         if (mapa.encontrarOcorrencia(texto) != null) {
                                             Map<UF, Integer> ocorrencia = mapa.encontrarOcorrencia(texto);
                                             System.out.println(
-                                                    "Quantidade de Telegramas encontrados com a palavra no Estado: \n");
+                                                    "Quantidade de Telegramas encontrados com o texto '"+texto.trim()+"' por Estado: \n");
                                             for (Entry<UF, Integer> pair : ocorrencia.entrySet()) {
                                                 System.out
                                                         .println(pair.getKey().getDescricao() + ": " + pair.getValue());
@@ -303,10 +314,10 @@ public class App {
                                     do {
                                         try {
                                             System.out
-                                                    .println("UF com maior quantidade de Telegramas: "
+                                                    .println("UFs com maior quantidade de Telegramas: "
                                                             + mapa.getMaiorLista());
                                             System.out
-                                                    .println("UF com maior quantidade de Telegramas: "
+                                                    .println("UFs com menor quantidade de Telegramas (>0): "
                                                             + mapa.getMenorLista());
                                             valido = true;
                                         } catch (Exception e) {

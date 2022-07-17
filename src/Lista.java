@@ -6,10 +6,13 @@ public class Lista {
     private int contador = 1;
     static int confirmacao = 0;
 
-    public boolean adicionar(Telegrama telegrama) {
-        telegrama.gerarIdentificador(contador);
-        contador++;
-        return lista.add(telegrama);
+    public int adicionar(Telegrama telegrama, int id) {
+        telegrama.setIdentificador(id);
+        if (lista.add(telegrama)) {
+            return telegrama.getIdentificador();
+        }
+        return -1;
+
     }
 
     public boolean remover(int identificador) {
@@ -35,21 +38,13 @@ public class Lista {
         List<Telegrama> Ocorrencias = new ArrayList<>();
         for (Telegrama telegrama : lista) {
             String[] mensagem = telegrama.getMensagem().split(" ");
-            for (int i = 0; i < mensagem.length; i++) {
-                if (mensagem[i].equals(texto)) {
-                    Ocorrencias.add(telegrama);
-                }
+
+            if (telegrama.getMensagem().toLowerCase().contains(texto)) { // verifica se a mensagem contem um determinado texto
+                Ocorrencias.add(telegrama);
+
             }
         }
         return Ocorrencias;
-    }
-
-    public int getContador() {
-        return contador;
-    }
-
-    public void setContador(int contador) {
-        this.contador = contador;
     }
 
     public int listaTamanho() {

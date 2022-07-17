@@ -35,9 +35,6 @@ public class Telegrama {
         this.endereco = endereco;
     }
 
-    public void gerarIdentificador(int entradaTelegrama) {
-        this.identificador = entradaTelegrama;
-    }
 
     public int getIdentificador() {
         return identificador;

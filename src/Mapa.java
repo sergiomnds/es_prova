@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 
 public class Mapa {
     private Map<UF, Lista> mapa = new HashMap<UF, Lista>();
+    private int id_telegrama = 1;
 
     Mapa() {
         for (UF uf : UF.values()) {
@@ -23,22 +24,25 @@ public class Mapa {
     }
 
     public Map<UF, Integer> encontrarOcorrencia(String texto) {
-        Map<UF, Integer> mapa1 = new HashMap<UF, Integer>();
+        texto = texto.trim().toLowerCase();
+        Map<UF, Integer> ocorrencias = new HashMap<UF, Integer>();
         for (Entry<UF, Lista> pair : mapa.entrySet()) {
             List<Telegrama> telegrama = pair.getValue().encontrarOcorrencia(texto);
             if (telegrama != null && telegrama.size() != 0) {
-                mapa1.put(pair.getKey(), telegrama.size());
-
+                ocorrencias.put(pair.getKey(), telegrama.size());
             }
         }
-        return mapa1;
+        return ocorrencias;
     }
 
-    public boolean adicionar(UF uf, Telegrama telegrama) throws IllegalArgumentException {
+    public int adicionar(UF uf, Telegrama telegrama) throws IllegalArgumentException {
         if (uf == null) {
             throw new IllegalArgumentException("UF não pode ser nulo");
         }
-        return mapa.get(uf).adicionar(telegrama);
+
+        id_telegrama++;
+        return mapa.get(uf).adicionar(telegrama, id_telegrama);
+
     }
 
     public boolean remover(int identificador) throws IllegalArgumentException {
@@ -55,28 +59,43 @@ public class Mapa {
     }
 
     public String getMaiorLista() {
-        int maior = 0;
-        UF uf = null;
-        for (UF uf1 : mapa.keySet()) {
-            if (mapa.get(uf1).listaTamanho() > maior) {
-                maior = mapa.get(uf1).listaTamanho();
-                uf = uf1;
-            }
-        }
-        return uf.getDescricao();
-    }
 
-    public String getMenorLista() {
-        int menor = Integer.MAX_VALUE;
-        UF uf = null;
-        for (UF uf1 : mapa.keySet()) {
-            if (mapa.get(uf1).listaTamanho() < menor) {
-                menor = mapa.get(uf1).listaTamanho();
-                uf = uf1;
+        int maior = 0;
+        Map<UF, Integer> quantidades = new HashMap<UF, Integer>();
+        for (Entry<UF, Lista> pair : mapa.entrySet()) {
+            quantidades.put(pair.getKey(), pair.getValue().listaTamanho());
+            if (pair.getValue().listaTamanho() > maior) {
+                maior = pair.getValue().listaTamanho();
             }
         }
-        return uf.getDescricao();
+        String resposta = "\n";
+        for (UF uf1 : quantidades.keySet()) {
+            if (quantidades.get(uf1) == maior) {
+                resposta += uf1.getDescricao() + " ("+maior+")\n";
+            }
+        }
+    
+        return resposta;
     }
+    public String getMenorLista() {
+
+        int menor = Integer.MAX_VALUE;
+        Map<UF, Integer> quantidades = new HashMap<UF, Integer>();
+        for (Entry<UF, Lista> pair : mapa.entrySet()) {
+            quantidades.put(pair.getKey(), pair.getValue().listaTamanho());
+            if (pair.getValue().listaTamanho() < menor && pair.getValue().listaTamanho() > 0) {
+                menor = pair.getValue().listaTamanho();
+            }
+        }
+        String resposta = "\n";
+        for (UF uf1 : quantidades.keySet()) {
+            if (quantidades.get(uf1) == menor) {
+                resposta += uf1.getDescricao() + " ("+menor+")\n";
+            }
+        }
+        return resposta;
+    }
+   
 
     public int quantidadeTelegramasNoMapa() {
         int contador = 0;
