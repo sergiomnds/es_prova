@@ -226,6 +226,7 @@ public class App {
                                 case 'B':
                                     try {
                                         System.out.println("Digite o texto que deseja procurar: ");
+                                        in.nextLine();
                                         String texto = in.nextLine();
                                         if (mapa.encontrarOcorrencia(texto) != null) {
                                             Map<UF, Integer> ocorrencia = mapa.encontrarOcorrencia(texto);
@@ -248,6 +249,30 @@ public class App {
                                         continue;
                                     }
                                     break;
+                                    case 'C':
+                                    valido = false;
+                                    do {
+                                        try {
+                                            System.out.println("Escolha o estado que você quer consultar: ");
+                                            for (UF t : UF.values()) {
+                                                System.out.println(t.ordinal() + " - " + t.getDescricao());
+                                            }
+                                            int UFSelecionado = in.nextInt();
+                                            uf = UF.values()[UFSelecionado];
+                                            System.out.println("Quantidade de Telegramas: " +
+                                                    mapa.quantidadeTelegramas(uf));
+                                            valido = true;
+                                            break;
+                                        } catch (Exception e) {
+                                            in = new Scanner(System.in);// reseta o scanner para que o usuario possa
+                                                                        // tentar
+                                                                        // novamente
+                                            System.out.println("Estado inválido, tente novamente!");
+                                            continue;
+                                        }
+                                    } while (!valido);
+                                    break;
+
                                 case 'D':
                                     int totalTelegramas = mapa.quantidadeTelegramasNoMapa();
                                     valido = false;
@@ -292,10 +317,13 @@ public class App {
                                     } while (!valido);
                                     break;
 
-                                case 4:
+                            
+                            }
+                            break;
+                            
+                            case 4:
                                     sair = true;
                                     break;
-                            }
                     }
                     executado = true;
                 } catch (Exception e) {
